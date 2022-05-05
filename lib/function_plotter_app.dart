@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:eval_ex/expression.dart';
+//import 'package:eval_ex/expression.dart';
 
 class FunctionPlotterApp extends StatefulWidget {
   const FunctionPlotterApp({Key? key}) : super(key: key);
@@ -28,16 +28,9 @@ class _FunctionPlotterAppState extends State<FunctionPlotterApp> {
   final TextEditingController _functionController = TextEditingController();
   final TextEditingController _xMinController = TextEditingController();
   final TextEditingController _xMaxController = TextEditingController();
-
+  String? errorMessage;
   late List<PointData> chartData = [
     PointData(x: 0, y: 0),
-    PointData(x: 1, y: 6),
-    PointData(x: 2, y: 5),
-    PointData(x: 3, y: -2),
-    PointData(x: 4, y: 16),
-    PointData(x: 5, y: 5),
-    PointData(x: 6, y: 7),
-    PointData(x: 7, y: -6),
   ];
   @override
   Widget build(BuildContext context) {
@@ -115,8 +108,33 @@ class _FunctionPlotterAppState extends State<FunctionPlotterApp> {
       padding: const EdgeInsets.all(12.0),
       child: ElevatedButton(
         onPressed: () {
-          //TODO: validate input
-          plot();
+          setState(() {
+            chartData = [PointData(x: 0, y: 0)];
+          });
+          if (_functionController.text.isEmpty ||
+              _xMinController.text.isEmpty ||
+              _xMaxController.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Please fill all the fields.'),
+              ),
+            );
+          } else if (!isValid(_functionController.text)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(errorMessage!),
+              ),
+            );
+          } else if (double.tryParse(_xMinController.text) == null ||
+              double.tryParse(_xMaxController.text) == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Please enter valid range numbers.'),
+              ),
+            );
+          } else {
+            plot();
+          }
         },
         child: Text(
           'Plot',
@@ -158,8 +176,9 @@ class _FunctionPlotterAppState extends State<FunctionPlotterApp> {
     double y = 0;
     double xMax = double.parse(_xMaxController.text);
     double xMin = double.parse(_xMinController.text);
-    double step = (xMax - xMin) / 100;
+    double step = (xMax - xMin) / 200;
 
+    x = xMin;
     while (x <= xMax) {
       for (EqComp comp in comps) {
         y += comp.coeff * pow(x, comp.power);
@@ -237,6 +256,18 @@ class _FunctionPlotterAppState extends State<FunctionPlotterApp> {
     setState(() {
       chartData = fillChartdata(parseEquation(_functionController.text));
     });
+  }
+
+  bool isValid(String input) {
+    if (input.isEmpty) {
+      return false;
+    }
+    print(input);
+    if (RegExp(r'[a-w_y-zA-Z]').hasMatch(input)) {
+      errorMessage = 'equation should contain the variable x only';
+      return false;
+    }
+    return true;
   }
 
   // void plot() {
