@@ -1,16 +1,19 @@
-# function_plotter
 
-A new Flutter project.
+# function plotter
+A Windows application that takes a string polynomial from the user , parse it and plot the equation
+along the x range specified by the user.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Test cases
+1- Error meesage is viewed upon submission of empty fields
+[alt text](https://github.com/Ahmedh12/function-plotter/blob/master/1.png?raw=true)
+2-Invalid input function is not accepted
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+3-Valid function and range
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Authors
+
+- [@Ahmed Hussien](https://www.github.com/Ahmedh12)
+
+
