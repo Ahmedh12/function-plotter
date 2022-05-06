@@ -26,7 +26,7 @@ void main() {
     });
 
     test('Accept only x as an alphabetic input', () {
-      expect(state.isValid('a'), isFalse);
+      expect(state.isValid('x'), isTrue);
     });
 
     test('Reject empty input', () {
@@ -39,11 +39,11 @@ void main() {
       expect(state.parseEquation('1'), isNotNull);
     });
 
-    test('Reject invalid input', () {
+    test('Does not parse invalid input', () {
       expect(state.parseEquation('a'), []);
     });
 
-    test('Reject empty input', () {
+    test('Does not parse empty input', () {
       expect(state.parseEquation(''), []);
     });
 
