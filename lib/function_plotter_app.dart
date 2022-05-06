@@ -9,7 +9,7 @@ class FunctionPlotterApp extends StatefulWidget {
   const FunctionPlotterApp({Key? key}) : super(key: key);
 
   @override
-  State<FunctionPlotterApp> createState() => _FunctionPlotterAppState();
+  State<FunctionPlotterApp> createState() => FunctionPlotterAppState();
 }
 
 class PointData {
@@ -24,7 +24,7 @@ class EqComp {
   EqComp(this.coeff, this.power);
 }
 
-class _FunctionPlotterAppState extends State<FunctionPlotterApp> {
+class FunctionPlotterAppState extends State<FunctionPlotterApp> {
   final TextEditingController _functionController = TextEditingController();
   final TextEditingController _xMinController = TextEditingController();
   final TextEditingController _xMaxController = TextEditingController();
